@@ -11,3 +11,14 @@ elab "#" s:term "#": term => do
   let dir := dir.dropRightWhile (fun c => c != '/' && c != '\\')
   let s ← elabTerm s none
   return mkApp (mkConst ``System.FilePath.mk) (mkApp (mkApp (mkConst ``String.append) (mkStrLit dir)) s)
+
+@[inline] def Substring.get! : Substring → String.Pos → Char
+  | ⟨s, b, _⟩, p => s.get! (b+p)
+
+@[inline] def Substring.get? : Substring → String.Pos → Option Char
+  | ⟨s, b, _⟩, p => s.get? (b+p)
+
+def List.flatten : List (List α) → List α
+  | [] => []
+  | []::tl => tl.flatten
+  | (h::tl₁)::tl₂ => h :: (tl₁::tl₂).flatten
