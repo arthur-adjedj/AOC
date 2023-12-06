@@ -1,5 +1,7 @@
 import AOC.Utils
 
+namespace Day2
+
 structure Count where
   red : Nat
   green : Nat
@@ -37,7 +39,7 @@ def isValidGame (s : String) : (Nat × Bool) := Id.run do
   let finalCount := picks.foldl changeCount Count.empty
   return (gameId,finalCount.isValid)
 
-def part1 : IO Nat := do
+def part₁ : IO Nat := do
   let lines ← IO.FS.lines #"input"#
   let mut res := 0
   for line in lines do
@@ -45,7 +47,7 @@ def part1 : IO Nat := do
     res := res + id
   return res
 
-#eval part1
+--#eval part₁
 
 def powerOfGame (s : String) : Nat := Id.run do
   let _::[picks] := s.splitOn ":" | unreachable!
@@ -53,11 +55,11 @@ def powerOfGame (s : String) : Nat := Id.run do
   let finalCount := picks.foldl changeCount Count.empty
   return finalCount.power
 
-def part2 : IO Nat := do
+def part₂ : IO Nat := do
   let lines ← IO.FS.lines #"input"#
   let mut res := 0
   for line in lines do
     res := res + powerOfGame line
   return res
 
-#eval part2
+--#eval part₂

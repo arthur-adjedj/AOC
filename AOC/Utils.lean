@@ -18,6 +18,9 @@ elab "#" s:term "#": term => do
 @[inline] def Substring.get? : Substring → String.Pos → Option Char
   | ⟨s, b, _⟩, p => s.get? (b+p)
 
+def Substring.startsWith (s : Substring) (pre : String) :=
+  s.take pre.length == pre.toSubstring
+
 def List.flatten : List (List α) → List α
   | [] => []
   | []::tl => tl.flatten
@@ -42,6 +45,9 @@ instance {i : Nat × Nat}: Decidable (∃ h : i.fst < Array.size xs, i.2 < Array
     isFalse fun c => h₁ c.1
 
 def String.toArray (s: String) : Array Char := s.data.toArray
+
+def Array.toNat (arr : Array Char) : Nat :=
+  arr.foldl (fun n c => 10*n+ c.toString.toNat!) 0
 
 @[inline] def getElem!! [GetElem cont idx elem dom] [Inhabited elem] (xs : cont) (i : idx) [Decidable (dom xs i)] : elem :=
   if h : _ then getElem xs i h else default

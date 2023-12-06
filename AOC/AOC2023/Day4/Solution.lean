@@ -1,5 +1,8 @@
 import AOC.Utils
 
+namespace Day4
+
+
 structure Scratchpad where
   numOfScratchpards : Nat
   winningNumbers : List Nat
@@ -16,21 +19,21 @@ def Scratchpad.numOfWins (nums : Scratchpad) : Nat :=
 def Scratchpad.points (nums : Scratchpad) : Nat :=
   if nums.numOfWins = 0 then 0 else 2^(nums.numOfWins-1)
 
-def String.toScratchpad (s : String) : Scratchpad := Id.run do
+def _root_.String.toScratchpad (s : String) : Scratchpad := Id.run do
   let [_head,picks]   := s.splitOn ":" | unreachable!
   let [winNums,nums] := picks.splitOn "|" | unreachable!
   let winNums := winNums.trim.splitOn " " |>.map (·.toNat!)
   let nums := nums.trim.splitOn " " |>.filterMap (·.toNat?)
   ⟨1,winNums,nums⟩
 
-def part1 : IO Nat := do
+def part₁ : IO Nat := do
   let lines ← IO.FS.lines #"input"#
   let mut res := 0
   for line in lines do
     res := res + line.toScratchpad.points
   return res
 
---#eval part1 --23028
+--#eval part₁ --23028
 
 abbrev Scratches := Array Scratchpad
 
@@ -63,9 +66,9 @@ def Scratches.totalScratches (s : Scratches) : Nat :=
   s.foldl (fun acc scratch => acc+scratch.numOfScratchpards) 0
 
 
-def part2 : IO Nat := do
+def part₂ : IO Nat := do
   let lines ← IO.FS.lines #"input"#
   let s : Scratches := lines.map String.toScratchpad
   return s.endScratches.totalScratches
 
---#eval part2 --9236992
+--#eval part₂ --9236992

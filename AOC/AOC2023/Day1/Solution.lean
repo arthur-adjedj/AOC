@@ -1,21 +1,20 @@
 import AOC.Utils
 
+namespace Day1
+
 def getNumber (s : String) : Nat :=
   let first := s.find (·.isDigit)
   let last := s.revFind (·.isDigit) |>.get!
   10 * (s.get! first).toString.toNat! + (s.get! last).toString.toNat!
 
-def part1 : IO Nat := do
+def part₁ : IO Nat := do
   let lines ← IO.FS.lines #"input"#
   let mut res := 0
   for line in lines do
     res := res + getNumber line
   return res
 
-#eval part1
-
-def Substring.startsWith (s : Substring) (pre : String) :=
-  s.take pre.length == pre.toSubstring
+--#eval part₁
 
 def StringNumbers : List String :=
   ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
@@ -47,11 +46,11 @@ def getNumber₂ (s : String) : Nat :=
   let last := findLast s.toSubstring |>.get!
   10 * first + last
 
-def part2 : IO Nat := do
+def part₂ : IO Nat := do
   let lines ← IO.FS.lines #"input"#
   let mut res := 0
   for line in lines do
     res := res + getNumber₂ line
   return res
 
-#eval part2
+--#eval part₂

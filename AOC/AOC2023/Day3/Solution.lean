@@ -1,5 +1,7 @@
 import AOC.Utils
 
+namespace Day3
+
 /-the borders of the matrix can be considered to be `'.'` -/
 instance (priority := high) : Inhabited Char := ⟨'.'⟩
 
@@ -16,9 +18,6 @@ def adjacentSymbol (s : Schematic) (i j: Nat) : Bool :=
   ]
 
   edges.any Char.isSymbol
-
-def Array.toNat (arr : Array Char) : Nat :=
-  arr.foldl (fun n c => 10*n+ c.toString.toNat!) 0
 
 def adjacentSymbolsLine (s : Schematic) (line start stop : Nat): Nat := Id.run do
   for j in [start:stop+1] do
@@ -50,7 +49,7 @@ def sumOfLine (s : Schematic) (l : Nat) : Nat := Id.run do
     else break
   return res
 
-def part1OnArray (s : Schematic) : Nat := Id.run do
+def part₁OnArray (s : Schematic) : Nat := Id.run do
   let mut res := 0
   for line in [0:s.size] do
     res := res + sumOfLine s line
@@ -71,12 +70,12 @@ def test :=
   |>.toArray
   |>.map String.toArray
 
-def part1 : IO Nat := do
+def part₁ : IO Nat := do
   let lines ← IO.FS.lines #"input"#
   let s := lines |>.map String.toArray
-  return part1OnArray s
+  return part₁OnArray s
 
-#eval part1 --539433
+--#eval part₁ --539433
 
 partial def getNumber (s : Schematic) (line start? : Nat) : Nat := Id.run do
   if !s[line]!![start?]!!.isDigit then
@@ -108,7 +107,7 @@ def toAdjacentNumbers (s : Schematic) (i j : Nat) : List Nat := Id.run do
 
   return res.filter (· != 0)
 
-def part2OnArray (s : Schematic) : Nat := Id.run do
+def part₂OnArray (s : Schematic) : Nat := Id.run do
   let mut res := 0
   for line in [0:s.size] do
     for j in [0:s[0]!.size] do
@@ -120,9 +119,9 @@ def part2OnArray (s : Schematic) : Nat := Id.run do
     res := res + num
   return res
 
-def part2 : IO Nat := do
+def part₂ : IO Nat := do
   let lines ← IO.FS.lines #"input"#
   let s := lines |>.map String.toArray
-  return part2OnArray s
+  return part₂OnArray s
 
-#eval part2 --75847567
+--#eval part₂ --75847567

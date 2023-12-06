@@ -2,3 +2,5 @@
 /lakefile.olean
 /lake-packages/*
 input
+/.lake
+lake-manifest.json
