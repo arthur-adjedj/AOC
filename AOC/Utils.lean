@@ -1,6 +1,7 @@
 import Lean
 
-open Lean Elab Term
+open Lean Elab Parser Term
+
 
 /-- When called inside a file in a path `PATH` elaborates a path `$PATH/s`, this is useful
     since every solution lean file is stored with its corresponding input, so one may only write
@@ -20,14 +21,6 @@ elab "#" s:term "#": term => do
 
 def Substring.startsWith (s : Substring) (pre : String) :=
   s.take pre.length == pre.toSubstring
-
-def List.flatten : List (List α) → List α
-  | [] => []
-  | []::tl => tl.flatten
-  | (h::tl₁)::tl₂ => h :: (tl₁::tl₂).flatten
-
-instance : GetElem (Array (Array α)) (Nat × Nat) α fun xs i =>  exists h : LT.lt i.1 xs.size, LT.lt i.2 (xs[i.1]'h).size where
-  getElem xs i h := xs.get ⟨i.1, h.1⟩ |>.get ⟨i.2,h.2⟩
 
 instance [h₁ : Decidable P] [h₂ : Decidable Q] : Decidable (∃ _ : P, Q) :=
   match h₁,h₂ with
