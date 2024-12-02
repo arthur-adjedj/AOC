@@ -23,4 +23,4 @@ def part₁ : IO Nat := do
     res := res + ((max l r) - (min l r))
   return res
 
-#eval part₁
+-- #eval part₁
