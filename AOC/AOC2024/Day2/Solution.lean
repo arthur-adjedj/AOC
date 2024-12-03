@@ -1,6 +1,6 @@
 import AOC.Utils
 
-namespace Day1
+namespace Day2
 
 def checkReport (incr?: Bool): List Nat → Bool
   | [] | [_] => true
